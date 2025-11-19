@@ -1,0 +1,78 @@
+<!-- proceso/paso3-metodo-pago.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paso 3: Pago | AutoRent S.A.C.</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/proceso.css" />
+</head>
+<body class="proceso-body">
+  <div id="header-placeholder"></div>
+
+  <main class="main-proceso">
+    <div class="progress-bar">
+      <div class="step done">1. Requisitos</div>
+      <div class="step done">2. Opciones</div>
+      <div class="step active">3. Pago</div>
+      <div class="step">4. Confirmación</div>
+    </div>
+
+    <h2>Paso 3: Método de Pago</h2>
+    <p>Elige cómo deseas realizar el pago por tu alquiler:</p>
+
+    <div class="resumen-reserva">
+      <h3>Resumen de tu Reserva</h3>
+      <ul id="detalle-reserva">
+        <!-- Se llena con JavaScript -->
+      </ul>
+    </div>
+
+    <form id="pagoForm">
+      <div class="payment-option">
+        <input type="radio" id="tarjeta" name="metodo" value="tarjeta" checked required>
+        <label for="tarjeta"><strong>Pago Online con Tarjeta</strong></label>
+        <div class="payment-details" id="detallesTarjeta">
+          <div class="form-group">
+            <label>Número de Tarjeta</label>
+            <input type="text" id="numTarjeta" placeholder="1234 5678 9012 3456" maxlength="16" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Fecha de Expiración</label>
+              <input type="month" id="expira" />
+            </div>
+            <div class="form-group">
+              <label>CVV</label>
+              <input type="text" id="cvv" placeholder="123" maxlength="3" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Nombre en la Tarjeta</label>
+            <input type="text" id="nombreTarjeta" placeholder="JUAN PEREZ" />
+          </div>
+        </div>
+      </div>
+
+      <div class="payment-option">
+        <input type="radio" id="efectivo" name="metodo" value="efectivo">
+        <label for="efectivo"><strong>Pagar en Agencia (Efectivo o Tarjeta)</strong></label>
+        <p>Realiza el pago al momento de retirar el vehículo. No necesitas ingresar datos.</p>
+      </div>
+
+      <div class="form-actions">
+        <a href="paso2-opciones.html" class="btn btn-outline">← Volver</a>
+        <button type="submit" class="btn btn-primary">Procesar Pago →</button>
+      </div>
+    </form>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/validaciones.js" defer></script>
+  <script src="../assets/js/reservas.js" defer></script>
+</body>
+</html>

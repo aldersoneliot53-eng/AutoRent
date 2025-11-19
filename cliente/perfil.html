@@ -1,0 +1,83 @@
+<!-- cliente/perfil.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mi Perfil | AutoRent S.A.C.</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/cliente.css" />
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="main-cliente">
+    <h1>Mi Perfil</h1>
+    <form id="perfilForm" class="profile-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre Completo</label>
+          <input type="text" id="nombre" readonly />
+        </div>
+        <div class="form-group">
+          <label>DNI</label>
+          <input type="text" id="dni" readonly />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="tel" id="telefono" />
+        </div>
+        <div class="form-group">
+          <label>Correo</label>
+          <input type="email" id="email" readonly />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Número de Licencia</label>
+        <input type="text" id="licencia" placeholder="ABC123456" />
+      </div>
+      <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const usuario = JSON.parse(localStorage.getItem("usuarioActivo"));
+      if (!usuario) {
+        window.location.href = "../auth/login.html";
+        return;
+      }
+
+      // Cargar datos del usuario
+      document.getElementById("nombre").value = usuario.nombre || "";
+      document.getElementById("dni").value = usuario.dni || "";
+      document.getElementById("telefono").value = usuario.telefono || "";
+      document.getElementById("email").value = usuario.email || "";
+      document.getElementById("licencia").value = usuario.licencia || "";
+
+      // Guardar cambios
+      document.getElementById("perfilForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const telefono = document.getElementById("telefono").value;
+        const licencia = document.getElementById("licencia").value;
+
+        let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+        const index = usuarios.findIndex(u => u.email === usuario.email);
+
+        if (index !== -1) {
+          usuarios[index].telefono = telefono;
+          usuarios[index].licencia = licencia;
+          localStorage.setItem("usuarios", JSON.stringify(usuarios));
+          alert(" Datos actualizados correctamente.");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

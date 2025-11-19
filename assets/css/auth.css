@@ -1,0 +1,143 @@
+/* assets/css/auth.css */
+
+.main-auth {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+  font-family: var(--font-text);
+}
+
+.auth-container {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: white;
+  height: auto;
+  margin: 0 auto;
+}
+
+.auth-form {
+  flex: 1;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-form h2 {
+  font-family: var(--font-title);
+  color: var(--primary);
+  margin-bottom: 12px;
+  font-size: 1.8rem;
+}
+
+.auth-form p {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--dark);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--gray);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: var(--transition);
+  font-family: var(--font-text);
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+}
+
+.btn-block {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.auth-links {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.95rem;
+}
+
+.auth-links a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-links a:hover {
+  text-decoration: underline;
+}
+
+.auth-image {
+  flex: 1;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  position: relative;
+}
+
+.auth-image img {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+  border-radius: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .auth-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .auth-form {
+    padding: 40px 20px;
+  }
+
+  .auth-image {
+    display: none; /* Ocultamos imagen en móvil para mejor UX */
+  }
+
+  .main-auth {
+    padding: 20px 10px;
+  }
+
+  .auth-form h2 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-form {
+    padding: 30px 15px;
+  }
+
+  .btn {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+}

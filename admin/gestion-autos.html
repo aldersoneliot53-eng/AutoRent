@@ -1,0 +1,194 @@
+<!-- admin/gestion-autos.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestionar Autos | Admin</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../assets/img/logo.png" alt="Logo AutoRent S.A.C." />
+      <h3>Panel Admin</h3>
+    </div>
+    <div class="sidebar-user">
+      <p><strong>Bienvenido:</strong> Administrador</p>
+    </div>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="dashboard.html"> Dashboard</a></li>
+        <li><a href="gestion-autos.html" class="active"> Gestionar Autos</a></li>
+        <li><a href="gestion-reservas.html"> Reservas</a></li>
+        <li><a href="gestion-usuarios.html"> Clientes</a></li>
+        <li><a href="gestion-blog.html"> Blog</a></li>
+        <li><button id="logoutBtn" class="btn-logout"> Cerrar Sesión</button></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    <h1>Gestión de Flota de Vehículos</h1>
+    <button class="btn-add" onclick="abrirModal()">+ Añadir Auto</button>
+
+    <div class="table-container">
+      <table class="admin-table" id="tablaAutos">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Modelo</th>
+            <th>Tipo</th>
+            <th>Precio/día</th>
+            <th>Imagen</th>
+            <th>Disponible</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Se llena con JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Modal Añadir Auto -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h2>Añadir Nuevo Vehículo</h2>
+      <form id="formAuto">
+        <input type="text" id="modelo" placeholder="Modelo del auto" required />
+        <input type="text" id="tipo" placeholder="Tipo (ej: SUV - 5 pasajeros)" required />
+        <input type="number" id="precio" placeholder="Precio por día (S/)" required min="50" />
+
+        <!-- Campo para subir imagen -->
+        <div class="form-group">
+          <label for="imagen">Subir Imagen del Auto</label>
+          <input type="file" id="imagen" accept="image/*" required />
+          <div id="preview" style="margin-top: 10px; text-align: center;">
+            <img id="preview-img" src="" alt="Vista previa" style="max-width: 100px; display: none;" />
+          </div>
+        </div>
+
+        <!-- Campo para descripción -->
+        <div class="form-group">
+          <label for="descripcion">Descripción del Vehículo</label>
+          <textarea id="descripcion" rows="3" placeholder="Ej: Sedán confiable, económico y cómodo. Ideal para ciudad y viajes cortos." required></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn-primary">Guardar</button>
+          <button type="button" onclick="cerrarModal()" class="btn-outline">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/admin.js" defer></script>
+  <script>
+    function abrirModal() { document.getElementById("modal").style.display = "flex"; }
+    function cerrarModal() { document.getElementById("modal").style.display = "none"; }
+
+    // Vista previa de la imagen
+    document.getElementById("imagen").addEventListener("change", function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const preview = document.getElementById("preview-img");
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function cargarAutos() {
+      const tbody = document.getElementById("tablaAutos").querySelector("tbody");
+      tbody.innerHTML = "";
+      const autos = JSON.parse(localStorage.getItem("autos")) || [];
+
+      autos.forEach(auto => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${auto.id}</td>
+          <td>${auto.modelo}</td>
+          <td>${auto.tipo}</td>
+          <td>S/ ${auto.precio}</td>
+          <td>
+  <img 
+    src="${auto.img.startsWith('data') ? auto.img : '../assets/img/autos/' + auto.img}" 
+    alt="${auto.modelo}" 
+    style="max-height: 50px; border-radius: 4px;" 
+  />
+</td>
+
+          <td>${auto.disponible ? '✅ Sí' : '❌ No'}</td>
+          <td>
+            <button class="btn-delete" onclick="eliminarAuto(${auto.id})">Eliminar</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function eliminarAuto(id) {
+      if (confirm("¿Estás seguro de eliminar este vehículo?")) {
+        let autos = JSON.parse(localStorage.getItem("autos")) || [];
+        autos = autos.filter(a => a.id !== id);
+        localStorage.setItem("autos", JSON.stringify(autos));
+        cargarAutos();
+      }
+    }
+
+    document.getElementById("formAuto").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const modelo = document.getElementById("modelo").value;
+      const tipo = document.getElementById("tipo").value;
+      const precio = parseInt(document.getElementById("precio").value);
+      const imagen = document.getElementById("imagen").files[0];
+      const descripcion = document.getElementById("descripcion").value;
+
+      const autos = JSON.parse(localStorage.getItem("autos")) || [];
+      const nuevoId = autos.length > 0 ? Math.max(...autos.map(a => a.id)) + 1 : 1;
+
+      // Convertir imagen a base64
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        autos.push({
+          id: nuevoId,
+          modelo,
+          tipo,
+          precio,
+          img: e.target.result,
+          descripcion, // ← ¡Se guarda la descripción!
+          disponible: true
+        });
+
+        localStorage.setItem("autos", JSON.stringify(autos));
+        document.getElementById("formAuto").reset();
+        cerrarModal();
+        cargarAutos();
+      };
+
+      reader.readAsDataURL(imagen);
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      requireAdmin(); // protege la página
+      cargarAutos();
+    });
+
+    document.getElementById("logoutBtn")?.addEventListener("click", () => {
+      localStorage.removeItem("usuarioActivo");
+      window.location.href = "../auth/login.html";
+    });
+  </script>
+</body>
+</html>

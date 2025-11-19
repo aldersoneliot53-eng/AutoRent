@@ -1,0 +1,83 @@
+/* assets/css/sidebar-admin.css */
+
+.sidebar-admin {
+  width: 280px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: var(--primary);
+  color: white;
+  padding: 20px;
+  box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidebar-header img {
+  width: 180px;
+  margin-bottom: 10px;
+}
+
+.sidebar-header h3 {
+  color: var(--accent);
+  font-size: 1.3rem;
+}
+
+.sidebar-user {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+}
+
+.sidebar-nav a,
+.sidebar-nav button {
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  padding: 14px 15px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: var(--transition);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.sidebar-nav a:hover {
+  background: var(--accent);
+  color: var(--primary);
+}
+
+.sidebar-nav a img {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.btn-logout-sidebar {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 14px 15px;
+  border-radius: 8px;
+}
+
+.btn-logout-sidebar:hover {
+  background: var(--accent);
+  color: var(--primary);
+}

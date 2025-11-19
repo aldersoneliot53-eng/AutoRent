@@ -1,0 +1,55 @@
+<!-- public/entrada.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Entrada del Blog | AutoRent S.A.C.</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/blog.css" />
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="main-post">
+    <article class="post-full">
+      <img src="../assets/img/blog/default.jpg" alt="Entrada del Blog" class="post-img" id="entradaImg" />
+      <h1 id="tituloEntrada">Cargando título...</h1>
+      <p class="post-date" id="fechaEntrada">Publicado el ...</p>
+
+      <div class="post-content" id="contenidoEntrada">
+        <p>Cargando contenido...</p>
+      </div>
+    </article>
+
+    <a href="blog.html" class="btn btn-outline back-btn">← Volver al Blog</a>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Obtener la entrada desde localStorage
+      const entrada = JSON.parse(localStorage.getItem("entradaSeleccionada"));
+
+      const img = document.getElementById("entradaImg");
+      const titulo = document.getElementById("tituloEntrada");
+      const fecha = document.getElementById("fechaEntrada");
+      const contenido = document.getElementById("contenidoEntrada");
+
+      if (!entrada) {
+        contenido.innerHTML = `<p>No se encontró la entrada. <a href="blog.html">Volver al blog</a></p>`;
+        return;
+      }
+
+      // Actualizar datos
+      img.src = entrada.imagen;
+      titulo.textContent = entrada.titulo;
+      fecha.textContent = `Publicado el ${entrada.fecha}`;
+      contenido.innerHTML = entrada.contenido || "<p>Contenido no disponible.</p>";
+    });
+  </script>
+</body>
+</html>

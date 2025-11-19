@@ -1,0 +1,138 @@
+/* assets/css/vehiculo.css */
+
+.main-vehiculo {
+  padding: 60px 0;
+}
+
+.vehicle-detail {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 50px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.vehicle-images {
+  flex: 1;
+  min-width: 300px;
+}
+
+.vehicle-images .main-img {
+  width: 100%;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.vehicle-images .main-img img {
+  width: 100%;
+  height: auto;
+  transition: var(--transition);
+}
+
+.vehicle-images .main-img img:hover {
+  transform: scale(1.03);
+}
+
+.vehicle-info {
+  flex: 1;
+  min-width: 300px;
+  background: white;
+  padding: 30px;
+  border-radius: var(--radius);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.vehicle-info h1 {
+  font-family: var(--font-title);
+  color: var(--primary);
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.category {
+  color: #666;
+  font-style: italic;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.specs {
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  font-size: 1rem;
+}
+
+.spec {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: #333;
+}
+
+.price-box {
+  margin: 25px 0;
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.per-day {
+  font-size: 0.8rem;
+  color: #777;
+  font-weight: normal;
+}
+
+.btn-reservar {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.2rem;
+  background-color: var(--accent);
+  color: var(--primary);
+  font-weight: 700;
+  border: none;
+  margin-top: 10px;
+}
+
+.btn-reservar:hover {
+  background-color: #ffcc00;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.description {
+  background: white;
+  padding: 40px;
+  border-radius: var(--radius);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.description h2 {
+  font-family: var(--font-title);
+  color: var(--primary);
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.description p {
+  margin-bottom: 16px;
+  line-height: 1.8;
+  color: #444;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .vehicle-detail {
+    flex-direction: column;
+  }
+
+  .vehicle-info h1 {
+    font-size: 1.6rem;
+  }
+
+  .price-box {
+    font-size: 1.8rem;
+  }
+}

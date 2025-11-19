@@ -1,0 +1,47 @@
+<!-- proceso/paso4-confirmacion.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Confirmación | AutoRent S.A.C.</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/proceso.css" />
+</head>
+<body class="proceso-body">
+  <div id="header-placeholder"></div>
+
+  <main class="main-proceso confirm-page">
+    <div class="progress-bar">
+      <div class="step done">1. Requisitos</div>
+      <div class="step done">2. Opciones</div>
+      <div class="step done">3. Pago</div>
+      <div class="step active">4. Confirmación</div>
+    </div>
+
+    <div class="confirmation-box">
+      <img src="../assets/img/icons/check.jpg" alt="Confirmado" class="check-icon" />
+      <h2>¡Reserva Confirmada! </h2>
+      <p>Tu solicitud ha sido procesada con éxito. Pronto recibirás un correo de confirmación.</p>
+
+      <div class="resumen-reserva">
+        <h3>Resumen de tu Reserva</h3>
+        <ul id="detalle-reserva">
+          <!-- Se llenará con JavaScript -->
+        </ul>
+      </div>
+
+      <div class="confirm-actions">
+        <a href="../cliente/reservas.html" class="btn btn-primary">Ver Mis Reservas</a>
+        <a href="../public/index.html" class="btn btn-outline">Volver al Inicio</a>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/reservas.js" defer></script>
+</body>
+</html>

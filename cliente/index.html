@@ -1,0 +1,56 @@
+<!-- cliente/index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bienvenido | AutoRent S.A.C.</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/cliente.css" />
+</head>
+<body>
+  
+  <div id="header-placeholder"></div>
+  
+
+  <main class="main-cliente">
+    <h1>Bienvenido, <span id="nombre-cliente">Cargando...</span> 👋</h1>
+    
+    <div class="options-grid">
+      <a href="perfil.html" class="option-card">
+        <img src="../assets/img/icons/user.jpg" alt="Perfil" />
+        <h3>Mi Perfil</h3>
+        <p>Actualiza tus datos personales y documentos</p>
+      </a>
+      <a href="reservas.html" class="option-card">
+        <img src="../assets/img/icons/car.jpg" alt="Reservas" />
+        <h3>Mis Reservas</h3>
+        <p>Consulta tu historial y estado de reservas</p>
+      </a>
+      <a href="../public/flota.html" class="option-card">
+        <img src="../assets/img/icons/license.jpg" alt="Reservar" />
+        <h3>Hacer una Reserva</h3>
+        <p>Alquila un auto en solo 3 pasos</p>
+      </a>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const nombreEl = document.getElementById("nombre-cliente");
+      if (nombreEl) {
+        const usuario = JSON.parse(localStorage.getItem("usuarioActivo"));
+        if (usuario) {
+          nombreEl.textContent = usuario.nombre || "Usuario";
+        } else {
+          window.location.href = "../auth/login.html";
+        }
+      }
+    });
+  </script>
+</body>
+</html>

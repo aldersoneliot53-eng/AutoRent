@@ -1,0 +1,98 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AutoRent S.A.C. | Alquiler de Autos en Arequipa</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/home.css" />
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="main-home">
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Alquila el auto que necesitas, cuando lo necesitas</h1>
+        <p>Desde económicos hasta SUV 4x4. Ideal para turistas, viajeros y empresas.</p>
+        <a href="flota.html" class="btn btn-primary">Ver Flota Disponible</a>
+      </div>
+      <div class="hero-img">
+        <img src="../assets/img/autos/toyota-corolla.jpg" alt="Toyota Corolla" />
+      </div>
+    </section>
+
+    <section class="featured">
+      <h2>Autos Destacados</h2>
+      <div class="cars-grid" id="destacadosGrid">
+        <!-- Se llena con JavaScript -->
+      </div>
+    </section>
+
+    <!-- CTA dinámico -->
+    <section class="cta" id="ctaSection">
+      <h2>¿Listo para tu próxima aventura?</h2>
+      <p>Inicia sesión o regístrate para hacer tu primera reserva.</p>
+      <div class="cta-buttons">
+        <a href="../auth/register.html" class="btn btn-secondary">Registrarse</a>
+        <a href="../auth/login.html" class="btn btn-outline">Iniciar Sesión</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const grid = document.getElementById("destacadosGrid");
+      let autos = JSON.parse(localStorage.getItem("autos")) || [
+        { id: 1, modelo: "Toyota Corolla", tipo: "Sedán - 5 pasajeros", precio: 120, img: "toyota-corolla.jpg", disponible: true },
+        { id: 2, modelo: "Jeep Renegade", tipo: "SUV - 5 pasajeros", precio: 180, img: "jeep-renegade.jpg", disponible: true },
+        { id: 3, modelo: "Honda CR-V", tipo: "SUV Grande - 7 pasajeros", precio: 200, img: "honda-crv.jpg", disponible: true }
+      ];
+
+      // Mostrar los 3 primeros autos destacados
+      const destacados = autos.slice(0, 3);
+
+      destacados.forEach(auto => {
+        const div = document.createElement("article");
+        div.className = "car-card";
+        div.innerHTML = `
+          <img src="../assets/img/autos/${auto.img}" alt="${auto.modelo}" />
+          <h3>${auto.modelo}</h3>
+          <p class="price">S/ ${auto.precio} <span>/día</span></p>
+          <a href="vehiculo.html" class="btn btn-outline" onclick="seleccionarAuto(${auto.id})">Ver Detalles</a>
+        `;
+        grid.appendChild(div);
+      });
+
+      // Actualizar CTA según sesión
+      actualizarCTA();
+    });
+
+    function seleccionarAuto(id) {
+      const autos = JSON.parse(localStorage.getItem("autos")) || [];
+      const auto = autos.find(a => a.id === id);
+      if (auto) {
+        localStorage.setItem("autoSeleccionado", JSON.stringify(auto));
+      }
+    }
+
+    function actualizarCTA() {
+      const ctaSection = document.getElementById("ctaSection");
+      const usuario = JSON.parse(localStorage.getItem("usuarioActivo"));
+
+      if (usuario) {
+        // Usuario logueado → ocultar CTA
+        ctaSection.style.display = "none";
+      } else {
+        // Usuario no logueado → mostrar CTA
+        ctaSection.style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>

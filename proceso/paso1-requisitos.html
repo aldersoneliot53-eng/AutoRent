@@ -1,0 +1,77 @@
+<!-- proceso/paso1-requisitos.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paso 1: Requisitos | AutoRent S.A.C.</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/proceso.css" />
+</head>
+<body class="proceso-body">
+  <div id="header-placeholder"></div>
+
+  <main class="main-proceso">
+    <div class="progress-bar">
+      <div class="step active">1. Requisitos</div>
+      <div class="step">2. Opciones</div>
+      <div class="step">3. Pago</div>
+      <div class="step">4. Confirmación</div>
+    </div>
+
+    <h2>Paso 1: Datos Personales y Requisitos</h2>
+    <p>Para continuar, completa los siguientes datos. Debes tener al menos 21 años y contar con licencia vigente.</p>
+
+    <form id="requisitosForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="dni">DNI</label>
+          <input type="text" id="dni" name="dni" placeholder="72345678" maxlength="8" required />
+        </div>
+        <div class="form-group">
+          <label for="licencia">Número de Licencia</label>
+          <input type="text" id="licencia" name="licencia" placeholder="ABC123456" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fechaNac">Fecha de Nacimiento</label>
+          <input type="date" id="fechaNac" name="fechaNac" required />
+        </div>
+        <div class="form-group">
+          <label for="telefono">Teléfono de Contacto</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="987654321" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Correo Electrónico</label>
+        <input type="email" id="email" name="email" placeholder="tu@correo.com" required />
+      </div>
+
+      <!-- Fechas de reserva -->
+      <div class="form-group">
+        <label for="fechaInicio">Fecha de Inicio</label>
+        <input type="date" id="fechaInicio" name="fechaInicio" required />
+      </div>
+      <div class="form-group">
+        <label for="fechaFin">Fecha de Fin</label>
+        <input type="date" id="fechaFin" name="fechaFin" required />
+      </div>
+
+      <div class="form-actions">
+        <a href="../public/flota.html" class="btn btn-outline">Volver</a>
+        <button type="submit" class="btn btn-primary">Continuar →</button>
+      </div>
+    </form>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/validaciones.js" defer></script>
+  <script src="../assets/js/reservas.js" defer></script>
+</body>
+</html>

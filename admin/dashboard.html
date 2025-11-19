@@ -1,0 +1,154 @@
+<!-- admin/dashboard.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard | Admin</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../assets/img/logo.png" alt="Logo AutoRent S.A.C." />
+      <h3>Panel Admin</h3>
+    </div>
+    <div class="sidebar-user">
+      <p><strong>Bienvenido:</strong> Administrador</p>
+    </div>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="dashboard.html" class="active"> Dashboard</a></li>
+        <li><a href="gestion-autos.html"> Gestionar Autos</a></li>
+        <li><a href="gestion-reservas.html"> Reservas</a></li>
+        <li><a href="gestion-usuarios.html"> Clientes</a></li>
+        <li><a href="gestion-blog.html"> Blog</a></li>
+        <li><button id="logoutBtn" class="btn-logout"> Cerrar Sesión</button></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    <h1>Dashboard - AutoRent S.A.C.</h1>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Autos Disponibles</h3>
+        <p id="total-autos">Cargando...</p>
+      </div>
+      <div class="stat-card">
+        <h3>Reservas Activas</h3>
+        <p id="reservas-activas">Cargando...</p>
+      </div>
+      <div class="stat-card">
+        <h3>Ingresos Hoy</h3>
+        <p>S/ <span id="ingresos-hoy">0</span></p>
+      </div>
+      <div class="stat-card">
+        <h3>Total Clientes</h3>
+        <p id="total-clientes">Cargando...</p>
+      </div>
+    </div>
+
+    <!-- Últimas Reservas -->
+    <div class="recent-section">
+      <h2>Últimas Reservas</h2>
+      <div class="table-container">
+        <table class="admin-table" id="tabla-recientes">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Auto</th>
+              <th>Fechas</th>
+              <th>Días</th>
+              <th>Total</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Se llena con JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/admin.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      requireAdmin(); // protege la página
+      
+      // Cargar datos
+      const autos = JSON.parse(localStorage.getItem("autos")) || [];
+      const reservas = JSON.parse(localStorage.getItem("reservas")) || [];
+      const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+      document.getElementById("total-autos").textContent = autos.length;
+      document.getElementById("reservas-activas").textContent = reservas.filter(r => r.estado === "Confirmada").length;
+      document.getElementById("total-clientes").textContent = usuarios.length;
+
+      // Calcular ingresos hoy
+      const hoy = new Date();
+hoy.setHours(0,0,0,0);
+
+const ingresosHoy = reservas
+  .filter(r => r.estado === "Confirmada")
+  .filter(r => {
+    const inicio = new Date(r.fechaInicio);
+    const fin = new Date(r.fechaFin);
+
+    inicio.setHours(0,0,0,0);
+    fin.setHours(0,0,0,0);
+
+    return inicio <= hoy && hoy <= fin;
+  })
+  .reduce((acc, r) => acc + (r.total || 0), 0);
+
+document.getElementById("ingresos-hoy").textContent = ingresosHoy.toFixed(2);
+
+
+      // Mostrar últimas 5 reservas
+      const tbody = document.getElementById("tabla-recientes").querySelector("tbody");
+      tbody.innerHTML = "";
+      const recientes = reservas.slice(-5).reverse();
+
+      recientes.forEach(r => {
+        // Calcular días
+        const dias = Math.ceil((new Date(r.fechaFin) - new Date(r.fechaInicio)) / (1000 * 60 * 60 * 24));
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${r.id}</td>
+          <td>${r.nombreCliente || "Desconocido"}</td>
+          <td>${r.auto || "No especificado"}</td>
+          <td>${r.fechaInicio} - ${r.fechaFin}</td>
+          <td>${dias}</td>
+          <td>S/ ${r.total || "0"}</td>
+          <td><span class="status">${r.estado || 'Pendiente'}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // ✅ Botón de cierre de sesión
+      const logoutBtn = document.getElementById("logoutBtn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          // Limpiar sesión
+          localStorage.removeItem("usuarioActivo");
+          
+          // Redirigir al login
+          window.location.href = "../auth/login.html";
+        });
+      }
+    });
+  </script>
+</body>
+</html>

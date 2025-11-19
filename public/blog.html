@@ -1,0 +1,139 @@
+<!-- public/blog.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog | AutoRent S.A.C.</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/blog.css" />
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="main-blog">
+    <h1>Últimas Promociones y Consejos</h1>
+    <p>Mantente informado sobre nuestras ofertas especiales y recomendaciones para tu próximo alquiler.</p>
+
+    <div class="posts-grid">
+      <!-- Entrada 1: Descuento de Verano -->
+      <article class="post-card">
+        <img src="../assets/img/blog/oferta-verano.jpg" alt="Descuento de Verano" />
+        <div class="post-info">
+          <h3>¡Descuento de Verano 2026!</h3>
+          <p class="date">10 de Octubre, 2026</p>
+          <p>Alquila cualquier SUV por 5 días o más y obtén un 15% de descuento. ¡Ideal para vacaciones en familia!</p>
+          <a href="entrada.html" class="read-more" onclick="seleccionarEntrada(1)">Leer más →</a>
+        </div>
+      </article>
+
+      <!-- Entrada 2: Consejos para un Viaje Seguro -->
+      <article class="post-card">
+        <img src="../assets/img/blog/consejos-viaje.jpg" alt="Consejos para viaje seguro" />
+        <div class="post-info">
+          <h3>Consejos para un Viaje Seguro</h3>
+          <p class="date">5 de Octubre, 2026</p>
+          <p>Te damos 10 tips esenciales antes de salir a carretera: desde revisar el auto hasta planificar tu ruta.</p>
+          <a href="entrada.html" class="read-more" onclick="seleccionarEntrada(2)">Leer más →</a>
+        </div>
+      </article>
+
+      <!-- Entrada 3: ¿Viajas con Niños? -->
+      <article class="post-card">
+        <img src="../assets/img/blog/familia.jpg" alt="Viajar con niños" />
+        <div class="post-info">
+          <h3>¿Viajas con Niños? Elige el Auto Ideal</h3>
+          <p class="date">1 de Octubre, 2026</p>
+          <p>Recomendaciones de vehículos espaciosos y seguros para familias. Con asientos para bebés y aire acondicionado trasero.</p>
+          <a href="entrada.html" class="read-more" onclick="seleccionarEntrada(3)">Leer más →</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../assets/js/app.js" defer></script>
+  <script>
+    function seleccionarEntrada(id) {
+      const entradas = [
+        null,
+        {
+          id: 1,
+          titulo: "¡Descuento de Verano 2026!",
+          fecha: "10 de Octubre, 2026",
+          imagen: "../assets/img/blog/oferta-verano.jpg",
+          contenido: `
+            <p>¡El verano se acerca y en <strong>AutoRent S.A.C.</strong> tenemos una oferta imperdible para ti!</p>
+            
+            <h2>¿En qué consiste?</h2>
+            <p>Alquila cualquier vehículo tipo <strong>SUV o camioneta 4x4</strong> por <strong>5 días o más</strong> y obtén un <strong>15% de descuento</strong> en el total del alquiler.</p>
+
+            <h2>Vehículos participantes</h2>
+            <ul>
+              <li>Jeep Renegade</li>
+              <li>Honda CR-V</li>
+              <li>Toyota RAV4</li>
+              <li>Ford Explorer</li>
+            </ul>
+
+            <h2>¿Cómo aplicar el descuento?</h2>
+            <p>Simplemente selecciona uno de los vehículos participantes en nuestro sistema de reservas y el descuento se aplicará automáticamente al elegir un periodo de 5 días o más.</p>
+
+            <p><strong>¡No pierdas esta oportunidad de viajar con estilo y ahorrar!</strong></p>
+          `
+        },
+        {
+          id: 2,
+          titulo: "Consejos para un Viaje Seguro",
+          fecha: "5 de Octubre, 2026",
+          imagen: "../assets/img/blog/consejos-viaje.jpg",
+          contenido: `
+            <p>Prepararte antes de salir a carretera puede marcar la diferencia entre un viaje tranquilo y uno lleno de contratiempos. En <strong>AutoRent S.A.C.</strong>, queremos que llegues a tu destino con seguridad.</p>
+
+            <h2>Revisa tu vehículo</h2>
+            <p>Asegúrate de que neumáticos, frenos, luces y niveles de aceite estén en buen estado.</p>
+
+            <h2>Lleva un kit básico</h2>
+            <p>Incluye gato, llanta de repuesto, triángulos, linterna y botiquín.</p>
+
+            <h2>Planifica tu ruta</h2>
+            <p>Consulta el clima y las condiciones de las carreteras antes de salir.</p>
+
+            <h2>No conduzcas cansado</h2>
+            <p>Descansa cada 2 horas aproximadamente para mantener la concentración.</p>
+
+            <p><strong>¡Tu seguridad es nuestra prioridad!</strong></p>
+          `
+        },
+        {
+          id: 3,
+          titulo: "¿Viajas con Niños? Elige el Auto Ideal",
+          fecha: "1 de Octubre, 2026",
+          imagen: "../assets/img/blog/familia.jpg",
+          contenido: `
+            <p>Si vas a viajar con tu familia, especialmente con niños pequeños, elegir el auto correcto es fundamental para garantizar comodidad y seguridad durante el trayecto.</p>
+
+            <h2>Vehículos recomendados</h2>
+            <p>Para familias grandes, sugerimos modelos como el Honda CR-V, Toyota Sienna o Ford Explorer, todos disponibles en nuestra flota.</p>
+
+            <h2>Equipamiento infantil</h2>
+            <p>Puedes solicitar asientos para bebés o niños al momento de la reserva. Todos nuestros autos cuentan con anclajes ISOFIX.</p>
+
+            <h2>Comodidad</h2>
+            <p>Busca autos con aire acondicionado trasero, enchufes USB y espacio amplio para maletas y juguetes.</p>
+
+            <p><strong>¡Haz que el viaje sea parte de la diversión!</strong></p>
+          `
+        }
+      ];
+
+      const entrada = entradas[id];
+      if (entrada) {
+        localStorage.setItem("entradaSeleccionada", JSON.stringify(entrada));
+      }
+    }
+  </script>
+</body>
+</html>

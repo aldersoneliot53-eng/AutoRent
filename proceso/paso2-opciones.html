@@ -1,0 +1,72 @@
+<!-- proceso/paso2-opciones.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paso 2: Opciones | AutoRent S.A.C.</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/proceso.css" />
+</head>
+<body class="proceso-body">
+  <div id="header-placeholder"></div>
+
+  <main class="main-proceso">
+    <div class="progress-bar">
+      <div class="step done">1. Requisitos</div>
+      <div class="step active">2. Opciones</div>
+      <div class="step">3. Pago</div>
+      <div class="step">4. Confirmación</div>
+    </div>
+
+    <h2>Paso 2: Opciones Adicionales</h2>
+    <p>Elige los servicios extra que deseas incluir en tu reserva:</p>
+
+    <div class="auto-info">
+      <h3>Auto Seleccionado:</h3>
+      <p id="auto-seleccionado">Cargando...</p>
+      <p id="dias-reserva">Cargando días...</p>
+    </div>
+
+    <form id="opcionesForm">
+      <div class="option-card">
+        <input type="checkbox" id="seguro" name="extras" value="seguro" data-precio="20">
+        <label for="seguro">
+          <strong>Seguro Ampliado</strong>
+          <span>+S/ 20 por día</span>
+          <p>Mayor cobertura en caso de accidentes o daños.</p>
+        </label>
+      </div>
+
+      <div class="option-card">
+        <input type="checkbox" id="gps" name="extras" value="gps" data-precio="10">
+        <label for="gps">
+          <strong>GPS Integrado</strong>
+          <span>+S/ 10 por día</span>
+          <p>Navegación precisa sin necesidad de celular.</p>
+        </label>
+      </div>
+
+      <div class="option-card">
+        <input type="checkbox" id="conductor" name="extras" value="conductor" data-precio="80">
+        <label for="conductor">
+          <strong>Conductor Designado</strong>
+          <span>+S/ 80 por día</span>
+          <p>Profesional que te llevará a donde necesites.</p>
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <a href="paso1-requisitos.html" class="btn btn-outline">← Volver</a>
+        <button type="submit" class="btn btn-primary">Continuar →</button>
+      </div>
+    </form>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/reservas.js" defer></script>
+</body>
+</html>

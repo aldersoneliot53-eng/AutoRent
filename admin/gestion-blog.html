@@ -1,0 +1,112 @@
+<!-- admin/gestion-blog.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Publicar Oferta | Admin</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../assets/img/logo.png" alt="Logo AutoRent S.A.C." />
+      <h3>Panel Admin</h3>
+    </div>
+    <div class="sidebar-user">
+      <p><strong>Bienvenido:</strong> Administrador</p>
+    </div>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="gestion-autos.html">Gestionar Autos</a></li>
+        <li><a href="gestion-reservas.html">Reservas</a></li>
+        <li><a href="gestion-usuarios.html"> Clientes</a></li>
+        <li><a href="gestion-blog.html" class="active"> Publicar Oferta</a></li>
+        <li><button id="logoutBtn" class="btn-logout">Cerrar Sesión</button></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    <h1>Publicar Promoción u Oferta</h1>
+    <form class="admin-form" id="formBlog">
+      <div class="form-group">
+        <label>Título de la Oferta</label>
+        <input type="text" id="titulo" placeholder="Ej: Verano 2025 -15%" required />
+      </div>
+      <div class="form-group">
+        <label>Descripción</label>
+        <textarea id="descripcion" rows="4" placeholder="Detalla la promoción..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Imagen (opcional)</label>
+        <input type="file" id="imagen" accept="image/*" />
+        <div id="preview" style="margin-top: 10px; text-align: center;">
+          <img id="preview-img" src="" alt="Vista previa" style="max-width: 100px; display: none;" />
+        </div>
+      </div>
+      <button type="submit" class="btn-primary">Publicar Oferta</button>
+    </form>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/admin.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const user = JSON.parse(localStorage.getItem("usuarioActivo"));
+      if (!user || user.rol !== "admin") {
+        window.location.href = "../auth/login.html";
+        return;
+      }
+    });
+
+    // Vista previa de la imagen
+    document.getElementById("imagen").addEventListener("change", function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const preview = document.getElementById("preview-img");
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    document.getElementById("formBlog").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const titulo = document.getElementById("titulo").value;
+      const descripcion = document.getElementById("descripcion").value;
+      const imagen = document.getElementById("imagen").files[0];
+
+      const oferta = {
+        id: Date.now(),
+        titulo,
+        descripcion,
+        imagen: imagen ? URL.createObjectURL(imagen) : "",
+        fecha: new Date().toLocaleDateString()
+      };
+
+      let ofertas = JSON.parse(localStorage.getItem("ofertas")) || [];
+      ofertas.push(oferta);
+      localStorage.setItem("ofertas", JSON.stringify(ofertas));
+
+      alert(" Oferta publicada correctamente.");
+      document.getElementById("formBlog").reset();
+      document.getElementById("preview-img").style.display = "none";
+    });
+
+    document.getElementById("logoutBtn")?.addEventListener("click", () => {
+      localStorage.removeItem("usuarioActivo");
+      window.location.href = "../auth/login.html";
+    });
+  </script>
+</body>
+</html>

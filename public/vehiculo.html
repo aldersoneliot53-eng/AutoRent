@@ -1,0 +1,135 @@
+<!-- public/vehiculo.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detalles del Vehículo | AutoRent S.A.C.</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/vehiculo.css" />
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="main-vehiculo">
+    <div class="vehicle-detail">
+      <div class="vehicle-images">
+        <img src="../assets/img/autos/default.jpg" alt="Auto" class="main-img" id="autoImg" />
+      </div>
+      <div class="vehicle-info" id="detalle-auto">
+        <p>Cargando información del vehículo...</p>
+      </div>
+    </div>
+
+    <section class="description">
+      <h2>Descripción del Vehículo</h2>
+      <p id="descripcion-texto">Cargando descripción...</p>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const auto = JSON.parse(localStorage.getItem("autoSeleccionado"));
+      const contenedor = document.getElementById("detalle-auto");
+      const img = document.getElementById("autoImg");
+      const desc = document.getElementById("descripcion-texto");
+
+      if (!auto) {
+        contenedor.innerHTML = `<p>No se seleccionó ningún vehículo. <a href="flota.html">Volver a la flota</a></p>`;
+        return;
+      }
+
+      // Actualizar imagen
+
+      // Mostrar correctamente imagen base64 o archivo local
+img.src = auto.img.startsWith("data:")
+  ? auto.img                        // imagen subida desde admin
+  : "../assets/img/autos/" + auto.img; // imagen local por defecto
+
+
+      // Descripciones únicas por modelo
+      const descripciones = {
+        "Toyota Corolla": "El Toyota Corolla 2024 es un sedán compacto ideal para desplazamientos urbanos y viajes cortos. Con un diseño moderno, excelente eficiencia de combustible y tecnología avanzada de seguridad, ofrece comodidad y confiabilidad en cada viaje. Perfecto para parejas o profesionales que buscan un auto económico y seguro.",
+        
+        "Jeep Renegade": "El Jeep Renegade combina estilo urbano con capacidad off-road. Diseñado para aventuras fuera de lo común, este SUV compacto cuenta con tracción 4x4, suspensión robusta y un interior espacioso. Ideal para quienes exploran caminos irregulares o disfrutan de escapadas al campo sin sacrificar confort.",
+        
+        "Honda CR-V": "La Honda CR-V es una SUV familiar de alto rendimiento, con amplio espacio interior, maletero generoso y sistemas de asistencia al conductor líderes en su clase. Su motor eficiente y su diseño elegante la convierten en la opción perfecta para familias grandes que priorizan seguridad, comodidad y versatilidad.",
+        
+        "Mazda CX-5": "Con un diseño elegante y un manejo deportivo, el Mazda CX-5 destaca por su refinamiento y calidad de construcción. Ofrece un interior premium, tecnología intuitiva y un rendimiento ágil. Es la elección ideal para conductores exigentes que valoran el estilo y el placer de conducir.",
+        
+        "Hyundai Accent": "El Hyundai Accent es un sedán económico diseñado para movilidad urbana. Con bajo consumo de combustible, mantenimiento económico y garantía extendida, es una excelente opción para usuarios primerizos o como vehículo de trabajo diario. Combina simplicidad, funcionalidad y buen rendimiento.",
+        
+        "Kia Rio": "Compacto, ágil y moderno, el Kia Rio es perfecto para ciudad. Cuenta con tecnología de conectividad, sistema de frenos ABS y airbags frontales. Su diseño juvenil y bajo costo operativo lo hacen ideal para estudiantes, parejas jóvenes o como segundo auto familiar.",
+        
+        "Nissan Kicks": "El Nissan Kicks es un SUV subcompacto con vocación urbana y toques aventureros. Tiene un diseño dinámico, buena visibilidad y tecnología ProPILOT para asistir en tráfico. Con un equipamiento completo y precio accesible, es ideal para quienes buscan un auto moderno y seguro para la ciudad.",
+        
+        "Ford Escape": "Potente y espacioso, el Ford Escape es un SUV mediano diseñado para familias activas. Ofrece motor turbo, tracción integral opcional y tecnología SYNC 3 para control por voz. Con gran capacidad de carga y conducción cómoda, es ideal para viajes largos y uso diario.",
+        
+        "Chevrolet Tracker": "La Chevrolet Tracker es una SUV baja con diseño robusto y tracción AWD. Compacta pero funcional, ofrece buena altura libre, sistema MyLink y cámara de retroceso. Perfecta para zonas rurales o caminos secundarios, sin perder practicidad en entornos urbanos.",
+        
+        "Volkswagen Jetta": "El Volkswagen Jetta 2024 combina deportividad y sofisticación. Con un motor turbo eficiente, interior premium y sistema de infoentretenimiento actualizado, ofrece una experiencia de conducción precisa y placentera. Ideal para quienes buscan un sedán con carácter y prestaciones superiores.",
+        
+        "Subaru Outback": "Reconocido por su durabilidad y tracción total, el Subaru Outback es ideal para condiciones extremas. Diseñado para montaña, nieve o caminos de tierra, también brinda comodidad en carretera. Con amplio espacio y alta resistencia, es la elección de aventureros y amantes de la naturaleza.",
+        
+        "Toyota RAV4": "Uno de los SUV más vendidos del mundo, el Toyota RAV4 destaca por su fiabilidad, eficiencia híbrida y seguridad avanzada. Con diseño agresivo y capacidad todoterreno, es ideal para familias que necesitan un auto versátil, económico y listo para cualquier destino.",
+        
+        "Mitsubishi L200": "La Mitsubishi L200 es una camioneta doble cabina robusta, diseñada para trabajo pesado y terrenos difíciles. Con motor diésel de alto torque, chasis reforzado y capacidad de remolque, es ideal para empresas, agricultores o proyectos de construcción en zonas remotas.",
+        
+        "Nissan Frontier": "La Nissan Frontier combina fuerza y funcionalidad en una pickup media. Con motor potente, caja manual o automática y diseño resistente, es perfecta para transporte de carga ligera, uso agrícola o actividades al aire libre. Ofrece durabilidad comprobada en condiciones exigentes.",
+        
+        "Suzuki Swift": "El Suzuki Swift es un hatchback pequeño, ágil y económico. Ideal para ciudad, con fácil maniobrabilidad, bajo consumo y mantenimiento económico. Su diseño dinámico y suspensiones bien afinadas lo hacen divertido de conducir, especialmente en tráfico denso."
+      };
+
+      // Obtener descripción específica o genérica
+      const textoDesc = descripciones[auto.modelo] || "Vehículo moderno, en excelente estado, listo para alquiler inmediato.";
+
+      // Llenar info
+      contenedor.innerHTML = `
+        <h1>${auto.modelo} 2024</h1>
+        <p class="category">${auto.tipo} · Gasolina</p>
+        
+        <div class="specs">
+          <div class="spec"><strong>Transmisión:</strong> Manual / Automático</div>
+          <div class="spec"><strong>A/C:</strong> Sí</div>
+          <div class="spec"><strong>Equipaje:</strong> 3 maletas</div>
+          <div class="spec"><strong>Puertas:</strong> 4</div>
+        </div>
+
+        <div class="price-box">
+          <span class="price">S/ ${auto.precio}</span>
+          <span class="per-day">por día</span>
+        </div>
+
+        <a href="#" class="btn btn-reservar" id="btnReservar">Reservar este Auto</a>
+      `;
+
+      desc.textContent = textoDesc;
+
+      // Botón de reserva con validación de login
+      document.getElementById("btnReservar").addEventListener("click", (e) => {
+        e.preventDefault();
+        
+        const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
+
+        if (!usuarioActivo || usuarioActivo.rol !== "cliente") {
+          alert("Debes iniciar sesión para hacer una reserva.");
+          window.location.href = "../auth/login.html";
+        } else {
+          localStorage.setItem("reservaTemporal", JSON.stringify({
+            ...JSON.parse(localStorage.getItem("reservaTemporal")) || {},
+            auto: auto.modelo,
+            precioDiario: auto.precio,
+            img: auto.img
+          }));
+          
+          window.location.href = "../proceso/paso1-requisitos.html";
+        }
+      });
+    });
+  </script>
+</body>
+</html>

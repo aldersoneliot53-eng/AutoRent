@@ -1,0 +1,146 @@
+/* assets/css/header.css */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 5%;
+  background: linear-gradient(135deg, var(--primary), #000);
+  color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: var(--transition);
+}
+
+.header.scrolled {
+  background: rgba(0, 31, 63, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 15px 5%;
+}
+
+.logo img {
+  height: 60px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: var(--transition);
+}
+
+.logo img:hover {
+  transform: scale(1.05);
+}
+
+.nav-public {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-public .nav-list {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+  align-items: center;
+}
+
+.nav-public a {
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: var(--transition);
+  position: relative;
+  padding: 8px 12px;
+}
+
+.nav-public a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background-color: var(--accent);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.nav-public a:hover::after {
+  width: 100%;
+}
+
+.nav-public a:hover {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.btn-login {
+  background-color: var(--accent);
+  color: var(--primary);
+  padding: 12px 24px;
+  border-radius: var(--btn-radius);
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+}
+
+.btn-login:hover {
+  background-color: #ffcc00;
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 215, 0, 0.4);
+}
+
+/* Menú responsive */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.menu-toggle div {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  transition: var(--transition);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+    background: var(--primary);
+  }
+
+  .nav-public {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav-public .nav-list {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .logo img {
+    margin-bottom: 10px;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav-public .nav-list.active {
+    display: flex;
+  }
+
+  .btn-login {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

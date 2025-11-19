@@ -1,0 +1,162 @@
+<!-- admin/gestion-reservas.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestionar Reservas | Admin</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../assets/img/logo.png" alt="Logo AutoRent S.A.C." />
+      <h3>Panel Admin</h3>
+    </div>
+    <div class="sidebar-user">
+      <p><strong>Bienvenido:</strong> Administrador</p>
+    </div>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="gestion-autos.html"> Gestionar Autos</a></li>
+        <li><a href="gestion-reservas.html" class="active">Gestionar Reservas</a></li>
+        <li><a href="gestion-usuarios.html">Clientes</a></li>
+        <li><a href="gestion-blog.html">Blog</a></li>
+        <li><button id="logoutBtn" class="btn-logout"> Cerrar Sesión</button></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    <h1>Gestión de Reservas</h1>
+
+    <div class="table-container">
+      <table class="admin-table" id="tablaReservas">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Auto</th>
+            <th>Fechas</th>
+            <th>Total</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Se llena con JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/admin.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const user = JSON.parse(localStorage.getItem("usuarioActivo"));
+      if (!user || user.rol !== "admin") {
+        window.location.href = "../auth/login.html";
+        return;
+      }
+
+      cargarReservas();
+    });
+
+    function cargarReservas() {
+      const tbody = document.getElementById("tablaReservas").querySelector("tbody");
+      tbody.innerHTML = "";
+      const reservas = JSON.parse(localStorage.getItem("reservas")) || [];
+
+      reservas.forEach(reserva => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${reserva.id}</td>
+          <td>${reserva.nombreCliente || "Sin nombre"}</td>
+          <td>${reserva.auto || "No especificado"}</td>
+          <td>${reserva.fechaInicio} - ${reserva.fechaFin}</td>
+          <td>S/ ${reserva.total || "0"}</td>
+          <td><span class="status ${reserva.estado?.toLowerCase() || 'pending'}">${reserva.estado || 'Pendiente'}</span></td>
+          <td>
+            ${reserva.estado === "Pendiente" ? `
+              <button class="btn-confirm" data-id="${reserva.id}">Confirmar</button>
+              <button class="btn-reject" data-id="${reserva.id}">Rechazar</button>
+              <button class="btn-cancel" data-id="${reserva.id}">Cancelar</button>
+            ` : `
+              <span style="color: #666; font-size: 0.9rem;">-</span>
+            `}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Añadir eventos a los botones
+      document.querySelectorAll(".btn-confirm").forEach(btn => {
+        btn.addEventListener("click", confirmarReserva);
+      });
+
+      document.querySelectorAll(".btn-reject").forEach(btn => {
+        btn.addEventListener("click", rechazarReserva);
+      });
+
+      document.querySelectorAll(".btn-cancel").forEach(btn => {
+        btn.addEventListener("click", cancelarReserva);
+      });
+    }
+
+    function confirmarReserva(e) {
+      const id = e.target.dataset.id;
+      let reservas = JSON.parse(localStorage.getItem("reservas")) || [];
+      
+      reservas = reservas.map(r => {
+        if (r.id == id) {
+          r.estado = "Confirmada";
+        }
+        return r;
+      });
+
+      localStorage.setItem("reservas", JSON.stringify(reservas));
+      alert(`Reserva #${id} confirmada.`);
+      cargarReservas();
+    }
+
+    function rechazarReserva(e) {
+      const id = e.target.dataset.id;
+      let reservas = JSON.parse(localStorage.getItem("reservas")) || [];
+      
+      reservas = reservas.map(r => {
+        if (r.id == id) {
+          r.estado = "Rechazada";
+        }
+        return r;
+      });
+
+      localStorage.setItem("reservas", JSON.stringify(reservas));
+      alert(`Reserva #${id} rechazada.`);
+      cargarReservas();
+    }
+
+    function cancelarReserva(e) {
+      const id = e.target.dataset.id;
+      if (confirm("¿Seguro que deseas cancelar esta reserva?")) {
+        let reservas = JSON.parse(localStorage.getItem("reservas")) || [];
+        reservas = reservas.filter(r => r.id != id);
+        localStorage.setItem("reservas", JSON.stringify(reservas));
+        alert(`Reserva #${id} cancelada.`);
+        cargarReservas();
+      }
+    }
+
+    document.getElementById("logoutBtn")?.addEventListener("click", () => {
+      localStorage.removeItem("usuarioActivo");
+      window.location.href = "../auth/login.html";
+    });
+  </script>
+</body>
+</html>
